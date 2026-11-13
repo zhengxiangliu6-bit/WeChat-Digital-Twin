@@ -1,0 +1,58 @@
+Collecting streamlit
+  Downloading streamlit-1.67.0-py3-none-any.whl.metadata (10 kB)
+Collecting altair!=5.4.0,!=5.4.1,<7,>=5.0.0 (from streamlit)
+  Downloading altair-6.3.0-py3-none-any.whl.metadata (11 kB)
+Requirement already satisfied: click<9,>=7.0 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from streamlit) (8.4.2)
+Requirement already satisfied: numpy<3,>=1.25.0 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from streamlit) (2.2.4)
+Requirement already satisfied: packaging>=20 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from streamlit) (24.0)
+Requirement already satisfied: pandas<4,>=1.5.3 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from streamlit) (2.2.3)
+Requirement already satisfied: pillow<14,>=9.2.0 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from streamlit) (12.3.0)
+Collecting pydeck<1,>=0.8.0b4 (from streamlit)
+  Downloading pydeck-0.9.3-py2.py3-none-any.whl.metadata (4.2 kB)
+Requirement already satisfied: protobuf<8,>=5.26.1 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from streamlit) (6.33.4)
+Collecting pyarrow!=25.0.0,<27,>=12.0.0 (from streamlit)
+  Downloading pyarrow-26.0.1-cp311-cp311-win_amd64.whl.metadata (3.0 kB)
+Requirement already satisfied: requests<3,>=2.27 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from streamlit) (2.32.3)
+Requirement already satisfied: typing-extensions<5,>=4.10.0 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from streamlit) (4.16.0)
+Requirement already satisfied: starlette<2,>=0.46.0 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from streamlit) (1.3.1)
+Requirement already satisfied: uvicorn<1,>=0.30.0 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from streamlit) (0.54.0)
+Requirement already satisfied: anyio<5,>=4.0.0 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from streamlit) (4.12.1)
+Requirement already satisfied: python-multipart<1,>=0.0.10 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from streamlit) (0.0.32)
+Requirement already satisfied: websockets<18,>=12.0.0 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from streamlit) (16.1.1)
+Collecting itsdangerous<3,>=2.1.2 (from streamlit)
+  Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+Collecting watchdog<8,>=2.1.5 (from streamlit)
+  Downloading watchdog-7.1.0-py3-none-win_amd64.whl.metadata (62 kB)
+Requirement already satisfied: jinja2 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit) (3.1.4)
+Requirement already satisfied: jsonschema>=3.0 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit) (4.26.0)
+Requirement already satisfied: narwhals>=2.4.0 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit) (2.24.0)
+Requirement already satisfied: idna>=2.8 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from anyio<5,>=4.0.0->streamlit) (3.20)
+Requirement already satisfied: colorama in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from click<9,>=7.0->streamlit) (0.4.6)
+Requirement already satisfied: python-dateutil>=2.8.2 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from pandas<4,>=1.5.3->streamlit) (2.9.0.post0)
+Requirement already satisfied: pytz>=2020.1 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from pandas<4,>=1.5.3->streamlit) (2025.2)
+Requirement already satisfied: tzdata>=2022.7 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from pandas<4,>=1.5.3->streamlit) (2025.3)
+Requirement already satisfied: charset-normalizer<4,>=2 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from requests<3,>=2.27->streamlit) (3.4.0)
+Requirement already satisfied: urllib3<3,>=1.21.1 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from requests<3,>=2.27->streamlit) (2.2.3)
+Requirement already satisfied: certifi>=2017.4.17 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from requests<3,>=2.27->streamlit) (2024.12.14)
+Requirement already satisfied: h11>=0.8 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from uvicorn<1,>=0.30.0->streamlit) (0.16.0)
+Requirement already satisfied: MarkupSafe>=2.0 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from jinja2->altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit) (3.0.2)
+Requirement already satisfied: attrs>=22.2.0 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from jsonschema>=3.0->altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit) (25.4.0)
+Requirement already satisfied: jsonschema-specifications>=2023.03.6 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from jsonschema>=3.0->altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit) (2025.9.1)
+Requirement already satisfied: referencing>=0.28.4 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from jsonschema>=3.0->altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit) (0.37.0)
+Requirement already satisfied: rpds-py>=0.25.0 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from jsonschema>=3.0->altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit) (2026.6.3)
+Requirement already satisfied: six>=1.5 in c:\users\13167\appdata\local\programs\python\python311\lib\site-packages (from python-dateutil>=2.8.2->pandas<4,>=1.5.3->streamlit) (1.17.0)
+Downloading streamlit-1.67.0-py3-none-any.whl (11.2 MB)
+   ---------------------------------------- 11.2/11.2 MB 5.3 MB/s eta 0:00:00
+Downloading altair-6.3.0-py3-none-any.whl (797 kB)
+   --------------------------------------- 797.2/797.2 kB 17.3 MB/s eta 0:00:00
+Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Downloading pyarrow-26.0.1-cp311-cp311-win_amd64.whl (29.0 MB)
+   ---------------------------------------- 29.0/29.0 MB 6.9 MB/s eta 0:00:00
+Downloading pydeck-0.9.3-py2.py3-none-any.whl (11.4 MB)
+   ---------------------------------------- 11.4/11.4 MB 5.6 MB/s eta 0:00:00
+Downloading watchdog-7.1.0-py3-none-win_amd64.whl (103 kB)
+Installing collected packages: watchdog, pyarrow, itsdangerous, pydeck, altair, streamlit
+Successfully installed altair-6.3.0 itsdangerous-2.2.0 pyarrow-26.0.1 pydeck-0.9.3 streamlit-1.67.0 watchdog-7.1.0
+
+[notice] A new release of pip is available: 25.0.1 -> 26.3
+[notice] To update, run: python.exe -m pip install --upgrade pip

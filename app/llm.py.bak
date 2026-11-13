@@ -1,0 +1,76 @@
+"""OpenAI-compatible Chat Completions client."""
+
+import os
+from openai import OpenAI, APIConnectionError, APITimeoutError, APIStatusError
+
+
+def _get_client() -> OpenAI:
+    base_url = os.environ.get("OPENAI_BASE_URL", "https://api.openai.com/v1")
+    api_key = os.environ.get("OPENAI_API_KEY", "")
+    if not api_key:
+        raise ValueError(
+            "OPENAI_API_KEY is not set. "
+            "Please create a .env file with your API key. See .env.example."
+        )
+    return OpenAI(base_url=base_url, api_key=api_key, timeout=60.0)
+
+
+def _get_model() -> str:
+    return os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
+
+
+def chat(system_prompt: str, messages: list[dict]) -> str:
+    """Send a chat completion request.
+
+    Args:
+        system_prompt: The persona system prompt.
+        messages: List of {"role": "user"|"assistant", "content": "..."}.
+
+    Returns:
+        The assistant's reply text.
+
+    Raises:
+        ValueError: Missing API key.
+        ConnectionError: Network or API errors.
+    """
+    client = _get_client()
+    model = _get_model()
+
+    api_messages = [{"role": "system", "content": system_prompt}]
+
+    # Trim conversation history to avoid context overflow.
+    # Keep the most recent messages, up to ~60k chars of history.
+    char_budget = 60_000
+    trimmed = []
+    total = 0
+    for msg in reversed(messages):
+        total += len(msg["content"])
+        if total > char_budget:
+            break
+        trimmed.append(msg)
+    trimmed.reverse()
+    api_messages.extend(trimmed)
+
+    try:
+        response = client.chat.completions.create(
+            model=model,
+            messages=api_messages,
+            temperature=0.9,
+            max_tokens=1024,
+        )
+    except APIConnectionError:
+        raise ConnectionError("无法连接到 API 服务器，请检查网络和 OPENAI_BASE_URL 配置。")
+    except APITimeoutError:
+        raise ConnectionError("API 请求超时，请稍后重试。")
+    except APIStatusError as e:
+        if e.status_code == 401:
+            raise ValueError("API Key 无效，请检查 .env 中的 OPENAI_API_KEY。")
+        if e.status_code == 429:
+            raise ConnectionError("API 请求过于频繁，请稍后重试。")
+        raise ConnectionError(f"API 返回错误 ({e.status_code})：{e.message}")
+
+    choice = response.choices[0] if response.choices else None
+    if not choice or not choice.message or not choice.message.content:
+        raise ConnectionError("API 返回了空回复，请重试。")
+
+    return choice.message.content.strip()

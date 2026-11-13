@@ -1,0 +1,88 @@
+# coding: utf-8
+"""Load crj persona files and build the system prompt."""
+
+import os
+
+# Paths relative to project root
+_SKILL_PATH = os.path.join("output", "friend", "SKILL.md")
+_VOICE_PATH = os.path.join("output", "friend", "references", "voice.md")
+_PATTERNS_PATH = os.path.join("output", "friend", "references", "dialogue-patterns.md")
+
+# Hard cap so we never blow up the context window.
+# SKILL.md ~4k chars, voice.md ~5k, patterns ~8k → well under 20k.
+_MAX_CHARS = 25_000
+
+
+def _read_file(path: str) -> str:
+    """Read a UTF-8 file. Return empty string if missing."""
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return f.read()
+    except FileNotFoundError:
+        return ""
+
+
+def _strip_yaml_frontmatter(text: str) -> str:
+    """Remove YAML frontmatter (--- ... ---) from markdown."""
+    if text.startswith("---"):
+        end = text.find("---", 3)
+        if end != -1:
+            text = text[end + 3:].lstrip("\n")
+    return text
+
+
+def load_system_prompt(project_root: str) -> str:
+    """Build the system prompt from Skill files.
+
+    Returns a single string suitable for the 'system' role message.
+    """
+    skill = _read_file(os.path.join(project_root, _SKILL_PATH))
+    voice = _read_file(os.path.join(project_root, _VOICE_PATH))
+    patterns = _read_file(os.path.join(project_root, _PATTERNS_PATH))
+
+    if not skill:
+        raise FileNotFoundError(
+            f"SKILL.md not found at {os.path.join(project_root, _SKILL_PATH)}. "
+            "Please ensure the persona files exist."
+        )
+
+    skill = _strip_yaml_frontmatter(skill)
+
+    parts = [
+        "你是 crj（陈荣君）的 AI 数字分身。",
+        "这不是 crj 本人，而是基于他的微信聊天风格训练的 AI 模拟。",
+        "请严格按照以下人物档案中的风格规则回复。",
+        "不要编造 crj 的真实经历、当前想法或私人信息。",
+        '不要使用 AI 助手常见的客套话(如"作为AI我认为")。',
+        "每次回复模拟微信群聊的多条短消息格式，每条消息用换行分隔。",
+        "",
+        "===== 人物核心档案 =====",
+        skill,
+    ]
+
+    budget = _MAX_CHARS - sum(len(p) for p in parts)
+
+    if patterns and budget > 0:
+        trimmed = patterns[:budget]
+        parts.append("\n===== 对话策略参考 =====")
+        parts.append(trimmed)
+        budget -= len(trimmed)
+
+    if voice and budget > 2000:
+        trimmed = voice[:budget]
+        parts.append("\n===== 原话样本参考 =====")
+        parts.append(trimmed)
+
+    prompt = "\n".join(parts)
+    if len(prompt) > _MAX_CHARS:
+        prompt = prompt[:_MAX_CHARS]
+
+    return prompt
+
+
+def get_persona_name() -> str:
+    return "crj"
+
+
+def get_disclaimer() -> str:
+    return "这是基于聊天记录训练的 AI 数字分身，不是陈荣君本人。"
